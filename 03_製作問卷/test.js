@@ -1,0 +1,156 @@
+function recreateForm() {
+    var form = FormApp.create('測試：行動電源租借服務調查');
+    form.setDescription(
+        '請協助填寫以下問卷。\n\n' +
+        '這份問卷主要是想了解您的「無手機恐懼症」程度。\n' +
+        '本問卷中收集到的任何資訊，均只用於學術研究及統計分析使用。\n\n' +
+        '問卷一共分為以下四部分：\n' +
+        '第一部分是人口資料收集共6題\n' +
+        '第二部分是有使用過行動電源租借服務的經驗共9題\n' +
+        '第三部分是無手機恐懼症測試，共20題\n' +
+        '第四部分是行動電源租借服務的科技接受模型測試，共28題\n' +
+        '全問卷預計填寫63題，均為選擇題\n\n' +
+        '請您留下 email 地址，謝謝。\n\n' +
+        '敬祝\n' +
+        '萬安\n\n' +
+        '國立某大學\n' +
+        '某研究所\n' +
+        '指導教授：某博士\n' +
+        '研究生：某學生'
+    );
+    // 啟用收集電子郵件地址的功能
+    form.setCollectEmail(true);
+    // 添加問題
+    addQuestions(form);
+}
+
+function addQuestions(form) {
+    // 添加頁面分隔符並設置標題
+    form.addPageBreakItem().setTitle('是否使用行動電源使用經驗前測');
+
+    var item1 = form.addMultipleChoiceItem();
+    item1.setTitle('你有使用過「行動電源」嗎？')
+        .setChoices([
+            item1.createChoice('是'),
+            item1.createChoice('否')
+        ]);
+
+    var item2 = form.addMultipleChoiceItem();
+    item2.setTitle('您有使用過「行動電源租借服務」嗎？')
+        .setChoices([
+            item2.createChoice('是'),
+            item2.createChoice('否')
+        ]);
+    
+        // 添加頁面分隔符並設置標題
+    form.addPageBreakItem().setTitle('為什麼不使用呢？');
+
+    var item3 = form.addCheckboxItem();
+    item3.setTitle('您為什麼不使用行動電源租借服務呢？（*至多選擇三項）')
+        .setChoices([
+            item3.createChoice('A. 不知道有這樣的服務'),
+            item3.createChoice('B. 價格太高'),
+            item3.createChoice('C. 不需要使用這樣的服務'),
+            item3.createChoice('D. 自己有買行動電源且會隨身攜帶'),
+            item3.createChoice('E. 我有資安顧慮'),
+            item3.createChoice('F. 租借與歸還不方便'),
+            item3.createChoice('G. 有其他充電方式')
+        ]);
+
+    var item4 = form.addMultipleChoiceItem();
+    item4.setTitle('會想要嘗試使用行動電源租借服務嗎？')
+        .setChoices([
+            item4.createChoice('會'),
+            item4.createChoice('不會')
+        ]);
+    
+    // item5：下拉選單 addListItem
+    var item5 = form.addListItem();
+    item5.setTitle('在沒有租借服務或其他可給手機進行充電的前提下，您在手機電量大約剩餘多少時會感到焦慮？')
+        .setChoiceValues([
+            '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'
+        ]);
+
+    form.addPageBreakItem().setTitle('使用行動電源租借服務經驗');
+
+    var item6 = form.addMultipleChoiceItem();
+    item6.setTitle('您使用行動電源租借服務的頻率是多久一次？（單選）')
+        .setChoices([
+            item6.createChoice('一個月一次或以下'),
+            item6.createChoice('一個月一到兩次'),
+            item6.createChoice('一個月三到四次'),
+            item6.createChoice('一個月五次或以上'),
+            item6.createChoice('每天使用')
+        ]);
+
+    var item7 = form.addCheckboxItem();
+    item7.setTitle('你使用過的行動電源租借服務「包含」下列哪幾個品牌? ');
+
+    var choicesWithImages = [
+        {
+            title: 'Chargespot',
+            imageUrl: 'https://drive.google.com/uc?export=view&id=1utYnKZvqywcecOnQxrnO7Vdx2yS2Av8l'
+        },
+        {
+            title: 'Ibon（Qiosk悠客）',
+            imageUrl: 'https://drive.google.com/uc?export=view&id=1utYnKZvqywcecOnQxrnO7Vdx2yS2Av8l'
+        },
+        {
+            title: 'EZcharge',
+            imageUrl: 'https://drive.google.com/uc?export=view&id=1utYnKZvqywcecOnQxrnO7Vdx2yS2Av8l'
+        },
+        {
+            title: '蜂電綠能',
+            imageUrl: 'https://drive.google.com/uc?export=view&id=1utYnKZvqywcecOnQxrnO7Vdx2yS2Av8l'
+        }
+    ];
+
+    var choices = choicesWithImages.map(function(choice, index) {
+        var image;
+        for (var attempts = 0; attempts < 3; attempts++) {
+            try {
+                image = UrlFetchApp.fetch(choice.imageUrl).getBlob().setContentType('image/jpeg');
+                // 成功獲取圖像，退出重試循環
+                break;
+            } catch (e) {
+                Logger.log('Error fetching image: ' + choice.imageUrl + ' - ' + e.message);
+                // 等待一秒鐘然後重試
+                Utilities.sleep(1000);
+            }
+        }
+        // 添加圖片並設置標題
+        if (image) {
+            form.addImageItem().setImage(image).setTitle(choice.title);
+            return item7.createChoice(choice.title);
+        } else {
+            // 無法添加圖片時拋出錯誤
+            throw new Error('Could not add image: ' + choice.title);
+        }
+    });
+
+    item7.setChoices(choices);
+
+    form.addPageBreakItem().setTitle('無手機恐懼症測試');
+
+    var scaleItem1 = form.addScaleItem();
+    scaleItem1.setTitle('如果無法持續透過智慧型手機取得資訊，我會感到不自在。')
+        .setBounds(1, 7)
+        .setLabels('非常不同意', '非常同意');
+
+    var scaleItem2 = form.addScaleItem();
+    scaleItem2.setTitle('如果我需要使用智慧手機查找資訊，但無法做到時，我會感到很惱怒。')
+        .setBounds(1, 7)
+        .setLabels('非常不同意', '非常同意');
+
+    form.addPageBreakItem().setTitle('行動電源租借服務的科技接受模型測試');
+
+    var scaleItem3 = form.addScaleItem();
+    scaleItem3.setTitle('您是否認為行動電源租借服務的使用方便？')
+        .setBounds(1, 7)
+        .setLabels('非常不同意', '非常同意');
+
+    var scaleItem4 = form.addScaleItem();
+    scaleItem4.setTitle('您是否認為行動電源租借服務的使用對您有幫助？')
+        .setBounds(1, 7)
+        .setLabels('非常不同意', '非常同意');
+}

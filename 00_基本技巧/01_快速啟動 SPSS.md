@@ -16,7 +16,7 @@ _MacOS 通過終端機快速啟動_
 
 <br>
 
-2. 設置命令行啟動腳本 `start_spss.sh`。
+2. 設置指令行啟動腳本 `start_spss.sh`。
 
     ```bash
     touch /usr/local/bin/start_spss.sh && code /usr/local/bin/start_spss.sh

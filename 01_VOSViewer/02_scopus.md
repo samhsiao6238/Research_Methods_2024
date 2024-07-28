@@ -117,7 +117,7 @@ _Visually impair*、accessibility、VR_
 
 <br>
 
-2. 存擋，自己命名。
+2. 存檔，自己命名。
 
     ![](images/img_28.png)
 

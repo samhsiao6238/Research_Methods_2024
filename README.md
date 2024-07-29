@@ -18,7 +18,21 @@ _研究方法 2024_
 
 1. VOSViewer 可視化書目管理工具
 
-2. EndNote、Zotero 書目管理工具
+2. Google 表單製作問卷
+
+3. 統計學概論
+
+4. SPSS 論文分析實務
+
+5. 書目管理工具：EndNote、Zotero
+
+6. 圖書館系統使用
+
+7. Overleaf 雲端 LaTex 工具
+
+8. AMOS
+
+9. Mplus
 
 
 

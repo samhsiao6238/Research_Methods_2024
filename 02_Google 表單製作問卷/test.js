@@ -29,7 +29,7 @@ function addQuestions(form) {
     form.addPageBreakItem().setTitle('是否使用行動電源使用經驗前測');
 
     var item1 = form.addMultipleChoiceItem();
-    item1.setTitle('你有使用過「行動電源」嗎？')
+    item1.setTitle('有使用過「行動電源」嗎？')
         .setChoices([
             item1.createChoice('是'),
             item1.createChoice('否')
@@ -84,7 +84,7 @@ function addQuestions(form) {
         ]);
 
     var item7 = form.addCheckboxItem();
-    item7.setTitle('你使用過的行動電源租借服務「包含」下列哪幾個品牌? ');
+    item7.setTitle('使用過的行動電源租借服務「包含」下列哪幾個品牌? ');
 
     var choicesWithImages = [
         {

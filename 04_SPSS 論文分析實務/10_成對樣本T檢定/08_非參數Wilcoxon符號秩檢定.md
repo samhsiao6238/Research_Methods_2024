@@ -34,7 +34,7 @@
 
 4. 貼上語法
 
-    <img src="images/img_19.png" width="400px">
+    <img src="images/img_19.png" width="100px">
 
 <br>
 
